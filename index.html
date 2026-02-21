@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charming Queen👑</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#e9d5ff,#d8b4fe,#c084fc);
+  font-family:'Segoe UI',sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+/* SPARKLES */
+.sparkle{
+  position:fixed;
+  bottom:-20px;
+  font-size:16px;
+  animation:rise linear infinite;
+}
+@keyframes rise{
+  to{transform:translateY(-110vh);opacity:0}
+}
+
+/* LAYOUT */
+.wrapper{
+  display:flex;
+  align-items:center;
+  gap:30px;
+}
+
+/* ROTATING LIGHT ONLY */
+@keyframes rotateLight{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
+
+/* PHOTO WRAP */
+.photo-wrap{
+  position:relative;
+  width:180px;
+  height:250px;
+  border-radius:22px;
+}
+
+.photo-wrap::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:24px;
+  background:conic-gradient(#6b21a8,#9333ea,#a855f7,#6b21a8);
+  animation:rotateLight 4s linear infinite;
+  z-index:-1;
+  filter:blur(8px);
+}
+
+.side-photo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:20px;
+  display:block;
+}
+
+/* CARD WRAP */
+.card-wrap{
+  position:relative;
+  width:400px;
+  border-radius:32px;
+}
+
+.card-wrap::before{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  border-radius:34px;
+  background:conic-gradient(#6b21a8,#9333ea,#a855f7,#6b21a8);
+  animation:rotateLight 6s linear infinite;
+  z-index:-1;
+  filter:blur(10px);
+}
+
+.card{
+  padding:28px;
+  border-radius:30px;
+  background:rgba(255,255,255,.25);
+  backdrop-filter:blur(15px);
+  text-align:center;
+}
+
+/* CROWN */
+.crown{
+  font-size:50px;
+  color:#7e22ce;
+  text-shadow:0 0 15px #9333ea;
+}
+
+/* TITLE */
+h1{
+  margin-top:10px;
+  color:#6b21a8;
+}
+
+/* BUTTON */
+button{
+  margin-top:15px;
+  padding:10px 22px;
+  border:none;
+  border-radius:25px;
+  background:linear-gradient(135deg,#7e22ce,#a855f7);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 0 15px #9333ea;
+  transition:.2s;
+}
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 25px #a855f7;
+}
+
+/* SECRET MESSAGE */
+.secret{
+  display:none;
+  margin-top:18px;
+  padding:15px;
+  border-radius:15px;
+  background:rgba(255,255,255,.45);
+  border:1px solid #7e22ce;
+  font-size:1rem;
+  line-height:1.6;
+
+  color:#000;
+  font-weight:bold;
+  font-style:italic;
+
+  animation:fadeIn 1.5s ease forwards;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:none}
+}
+
+/* FIREWORK */
+.fire{
+  position:fixed;
+  left:50%;
+  top:50%;
+  font-size:22px;
+  pointer-events:none;
+  animation:burst 1.5s ease-out forwards;
+}
+@keyframes burst{
+  to{transform:translate(var(--x),var(--y)) scale(0);opacity:0}
+}
+
+/* RESPONSIVE */
+@media(max-width:950px){
+  .wrapper{
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- LEFT PHOTO -->
+  <div class="photo-wrap">
+    <img src="photo1.jpg" class="side-photo">
+  </div>
+
+  <!-- CENTER CARD -->
+  <div class="card-wrap">
+    <div class="card">
+
+      <div class="crown">👑</div>
+      <h1>Happy Birthday Queen Priyanka</h1>
+
+      <button onclick="reveal()">Reveal Royal Message ✨</button>
+
+      <div class="secret" id="secret">
+        👑 Priyanka,<br><br>
+        Today the world celebrates a queen.<br>
+        Your strength, your grace, your smile —<br>
+        everything about you shines brighter than the stars ✨<br><br>
+        May your throne be built on happiness,<br>
+        your confidence glow endlessly,<br>
+        and your world be filled with love 💜<br><br>
+        You are rare. You are charming. You are unforgettable.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT PHOTO -->
+  <div class="photo-wrap">
+    <img src="photo2.jpg" class="side-photo">
+  </div>
+
+</div>
+
+<script>
+
+/* Sparkles */
+setInterval(()=>{
+  let s=document.createElement("div");
+  s.className="sparkle";
+  s.innerText="✨";
+  s.style.left=Math.random()*100+"vw";
+  s.style.animationDuration=(Math.random()*4+5)+"s";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),9000);
+},600);
+
+/* Reveal */
+function reveal(){
+  document.getElementById("secret").style.display="block";
+
+  for(let i=0;i<80;i++){
+    let f=document.createElement("div");
+    f.className="fire";
+    f.innerText=["✨","💜","🌟","👑"][Math.floor(Math.random()*4)];
+    let a=Math.random()*360;
+    let d=200+Math.random()*200;
+    f.style.setProperty("--x",Math.cos(a*Math.PI/180)*d+"px");
+    f.style.setProperty("--y",Math.sin(a*Math.PI/180)*d+"px");
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1500);
+  }
+}
+
+</script>
+
+</body>
+</html>
